@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getx_core_resources/getx_core_resources.dart';
 
 import 'app_controller.dart';
+import 'settings_page.dart';
 
 class HomePage extends GetView<AppController> {
   const HomePage({super.key});
@@ -13,14 +14,10 @@ class HomePage extends GetView<AppController> {
         title: Text('TOF Pulls'),
         centerTitle: true,
         actions: [
-          Obx(() {
-            final isDark = controller.isDarkTheme.value;
-
-            return IconButton(
-              onPressed: () => controller.isDarkTheme.value = !controller.isDarkTheme.value,
-              icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
-            );
-          }),
+          IconButton(
+            onPressed: () => Nav.to.go(context, page: SettingsPage()),
+            icon: Icon(Icons.settings),
+          ),
         ],
       ),
       body: Container(),
