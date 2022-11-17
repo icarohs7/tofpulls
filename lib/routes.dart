@@ -1,7 +1,7 @@
 import 'package:beamer/beamer.dart';
 
-import 'app/shared/pages/home/home_page.dart';
-import 'app/shared/pages/settings/settings_page.dart';
+import 'app/pages/home/home_page.dart';
+import 'app/pages/settings/settings_page.dart';
 
 final routes = BeamerDelegate(
   locationBuilder: RoutesLocationBuilder(
