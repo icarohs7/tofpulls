@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'limited_banner.freezed.dart';
-
 part 'limited_banner.g.dart';
 
 @freezed
@@ -11,6 +10,7 @@ class LimitedBanner with _$LimitedBanner {
     required String name,
     required DateTime creationDate,
     @Default(0) int pulls,
+    @Default(<SsrPull>[]) List<SsrPull> limitedPulls,
     @Default(defaultStandardBannerCharacters)
         Map<String, StandardBannerCharacter> standardBannerCharacters,
   }) = _LimitedBanner;
@@ -21,8 +21,9 @@ class LimitedBanner with _$LimitedBanner {
 @freezed
 class StandardBannerCharacter with _$StandardBannerCharacter {
   const factory StandardBannerCharacter({
+    required String id,
     required String name,
-    @Default(0) int obtained,
+    @Default(<SsrPull>[]) List<SsrPull> pulls,
   }) = _StandardBannerCharacter;
 
   const StandardBannerCharacter._();
@@ -32,13 +33,22 @@ class StandardBannerCharacter with _$StandardBannerCharacter {
 }
 
 const defaultStandardBannerCharacters = {
-  'zero': StandardBannerCharacter(name: 'Zero'),
-  'tsubasa': StandardBannerCharacter(name: 'Tsubasa'),
-  'shiro': StandardBannerCharacter(name: 'Shiro'),
-  'samir': StandardBannerCharacter(name: 'Samir'),
-  'meryl': StandardBannerCharacter(name: 'Meryl'),
-  'king': StandardBannerCharacter(name: 'KING'),
-  'crow': StandardBannerCharacter(name: 'Crow'),
-  'huma': StandardBannerCharacter(name: 'Huma'),
-  'coco_ritter': StandardBannerCharacter(name: 'Coco Ritter'),
+  'zero': StandardBannerCharacter(id: 'zero', name: 'Zero'),
+  'tsubasa': StandardBannerCharacter(id: 'tsubasa', name: 'Tsubasa'),
+  'shiro': StandardBannerCharacter(id: 'shiro', name: 'Shiro'),
+  'samir': StandardBannerCharacter(id: 'samir', name: 'Samir'),
+  'meryl': StandardBannerCharacter(id: 'meryl', name: 'Meryl'),
+  'king': StandardBannerCharacter(id: 'king', name: 'KING'),
+  'crow': StandardBannerCharacter(id: 'crow', name: 'Crow'),
+  'huma': StandardBannerCharacter(id: 'huma', name: 'Huma'),
+  'coco_ritter': StandardBannerCharacter(id: 'coco_ritter', name: 'Coco Ritter'),
 };
+
+@freezed
+class SsrPull with _$SsrPull {
+  const factory SsrPull({
+    required int pullNumber,
+  }) = _SsrPull;
+
+  factory SsrPull.fromJson(Map<String, dynamic> json) => _$SsrPullFromJson(json);
+}

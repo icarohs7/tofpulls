@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart' hide Banner;
 import 'package:getit_core_resources/getit_core_resources.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../shared/models/limited_banner.dart';
+import 'banner_controller.dart';
 
-class BannerPage extends StatelessWidget {
-  const BannerPage({super.key, required this.banner});
+class BannerPage extends ConsumerWidget {
+  const BannerPage({super.key, required LimitedBanner banner}) : initialBanner = banner;
 
-  final LimitedBanner banner;
+  final LimitedBanner initialBanner;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(bannerControllerProvider(initialBanner));
+    final banner = controller.banner;
+    final limitedPulls = controller.limitedPulls;
+    final standardPulls = controller.standardPulls;
+    final ssrPulls = limitedPulls + standardPulls;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(banner.name),
@@ -33,12 +41,12 @@ class BannerPage extends StatelessWidget {
           ),
           ListTile(
             title: Text(
-              'Armas do Banner Obtidas: 0x',
+              'Armas do Banner Obtidas: $limitedPulls',
               textAlign: TextAlign.center,
               style: context.headline6,
             ),
             subtitle: Text(
-              'SSRs Obtidos: 0',
+              'SSRs Obtidos: $ssrPulls',
               textAlign: TextAlign.center,
             ),
           ),
@@ -50,7 +58,7 @@ class BannerPage extends StatelessWidget {
                 final character = entry.value;
 
                 return InkWell(
-                  onTap: () {},
+                  onTap: () => controller.pullStandardSsr(banner, key),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -60,7 +68,7 @@ class BannerPage extends StatelessWidget {
                           image: AssetImage('assets/images/$key.webp'),
                           width: 72,
                         ),
-                        Text('${character.obtained}x', style: context.headline6),
+                        Text('${character.pulls.length}x', style: context.headline6),
                       ],
                     ),
                   ),
@@ -72,7 +80,7 @@ class BannerPage extends StatelessWidget {
           Center(
             child: ElevatedButton(
               child: Text('Marcar Obtenção de Arma do Banner'),
-              onPressed: () {},
+              onPressed: () => controller.pullLimitedSsr(banner),
             ),
           ),
           Padding(
@@ -82,14 +90,14 @@ class BannerPage extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     child: Text('Atirar 1x'),
-                    onPressed: () {},
+                    onPressed: () => controller.pull(banner, 1),
                   ),
                 ),
                 SizedBox(width: 8),
                 Expanded(
                   child: ElevatedButton(
                     child: Text('Atirar 10x'),
-                    onPressed: () {},
+                    onPressed: () => controller.pull(banner, 10),
                   ),
                 ),
               ],
