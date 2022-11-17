@@ -25,6 +25,8 @@ class StandardBannerCharacter with _$StandardBannerCharacter {
     @Default(0) int obtained,
   }) = _StandardBannerCharacter;
 
+  const StandardBannerCharacter._();
+
   factory StandardBannerCharacter.fromJson(Map<String, dynamic> json) =>
       _$StandardBannerCharacterFromJson(json);
 }
@@ -38,5 +40,5 @@ const defaultStandardBannerCharacters = {
   'king': StandardBannerCharacter(name: 'KING'),
   'crow': StandardBannerCharacter(name: 'Crow'),
   'huma': StandardBannerCharacter(name: 'Huma'),
-  'coco ritter': StandardBannerCharacter(name: 'Coco Ritter'),
+  'coco_ritter': StandardBannerCharacter(name: 'Coco Ritter'),
 };

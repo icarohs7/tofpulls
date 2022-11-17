@@ -30,7 +30,7 @@ class CreateBannerDialog extends HookWidget {
             key: bannerKey,
             controller: bannerNameController,
             validator: requiredValidator(),
-            decoration: InputDecoration(labelText: 'Nome do Banner'),
+            decoration: InputDecoration(labelText: 'Personagem do Banner'),
           ),
         ],
       ),
