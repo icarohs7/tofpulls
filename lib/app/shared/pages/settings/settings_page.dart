@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:getx_core_resources/getx_core_resources.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../main.dart';
 import '../../../app_controller.dart';
 
-class SettingsPage extends GetView<AppController> {
+class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
 
-  void toggleDarkTheme() {
-    controller.isDarkTheme.value = !controller.isDarkTheme.value;
+  AppController get appController => getIt();
+
+  void toggleDarkTheme(WidgetRef ref, bool state) {
+    ref.read(appController.isDarkThemeProvider.notifier).state = state;
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(appController.isDarkThemeProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Configurações'),
@@ -19,15 +24,11 @@ class SettingsPage extends GetView<AppController> {
       ),
       body: ListView(
         children: [
-          Obx(() {
-            final isDarkTheme = controller.isDarkTheme.value;
-
-            return SwitchListTile(
-              title: Text('Tema Escuro'),
-              value: isDarkTheme,
-              onChanged: (v) => toggleDarkTheme(),
-            );
-          }),
+          SwitchListTile(
+            title: Text('Tema Escuro'),
+            value: isDarkTheme,
+            onChanged: (state) => toggleDarkTheme(ref, state),
+          ),
         ],
       ),
     );

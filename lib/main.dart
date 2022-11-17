@@ -1,14 +1,18 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:getx_core_resources/getx_core_resources.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:getit_core_resources/getit_core_resources.dart';
 
 import 'app/app_controller.dart';
-import 'app/shared/pages/home/home_page.dart';
+import 'routes.dart';
+
+final getIt = GetIt.I;
 
 // ignore: avoid_void_async
 void main() async {
   await setup();
-  runApp(const AppWidget());
+  runApp(ProviderScope(child: const AppWidget()));
 }
 
 Future<void> setup() async {
@@ -16,37 +20,36 @@ Future<void> setup() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).orNull();
 
   //Controllers
-  Get.putSingleton(AppController());
+  getIt.registerLazySingleton(() => AppController());
   //Repositories
   //Services
   //Others
 }
 
-class AppWidget extends GetView<AppController> {
+class AppWidget extends ConsumerWidget {
   const AppWidget({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() {
-      final isDarkTheme = controller.isDarkTheme.value;
+  AppController get controller => getIt();
 
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-        title: 'TOF Pulls',
-        theme: ThemeData(
-          useMaterial3: true,
-          brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-        ),
-        defaultTransition: Transition.fadeIn,
-        transitionDuration: const Duration(milliseconds: 300),
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('pt', 'BR')],
-      );
-    });
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(controller.isDarkThemeProvider);
+
+    return MaterialApp.router(
+      routeInformationParser: BeamerParser(),
+      routerDelegate: routes,
+      debugShowCheckedModeBanner: false,
+      title: 'TOF Pulls',
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: isDarkTheme ? Brightness.dark : Brightness.light,
+      ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
+    );
   }
 }

@@ -1,10 +1,7 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:getx_core_resources/getx_core_resources.dart';
 
-import '../../../app_controller.dart';
-import '../settings/settings_page.dart';
-
-class HomePage extends GetView<AppController> {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
@@ -15,7 +12,7 @@ class HomePage extends GetView<AppController> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () => Nav.to.go(context, page: SettingsPage()),
+            onPressed: () => context.beamToNamed('/settings'),
             icon: Icon(Icons.settings),
           ),
         ],

@@ -1,5 +1,5 @@
-import 'package:getx_core_resources/getx_core_resources.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AppController {
-  final isDarkTheme = false.obs;
+  final isDarkThemeProvider = StateProvider((ref) => false);
 }
