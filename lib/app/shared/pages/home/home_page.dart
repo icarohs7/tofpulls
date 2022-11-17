@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:getx_core_resources/getx_core_resources.dart';
 
-import 'app_controller.dart';
-import 'settings_page.dart';
+import '../../../app_controller.dart';
+import '../settings/settings_page.dart';
 
 class HomePage extends GetView<AppController> {
   const HomePage({super.key});

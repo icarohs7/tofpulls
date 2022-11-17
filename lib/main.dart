@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:getx_core_resources/getx_core_resources.dart';
 
-import 'app_controller.dart';
-import 'home_page.dart';
+import 'app/app_controller.dart';
+import 'app/shared/pages/home/home_page.dart';
 
 // ignore: avoid_void_async
 void main() async {

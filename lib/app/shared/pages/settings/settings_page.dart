@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getx_core_resources/getx_core_resources.dart';
 
-import 'app_controller.dart';
+import '../../../app_controller.dart';
 
 class SettingsPage extends GetView<AppController> {
   const SettingsPage({super.key});
