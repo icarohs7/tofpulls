@@ -33,17 +33,14 @@ class AppWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkTheme = ref.watch(controller.isDarkThemeProvider);
+    final isDarkTheme = ref.watch(controller.isDarkThemeProvider).value;
 
     return MaterialApp.router(
       routeInformationParser: BeamerParser(),
       routerDelegate: routes,
       debugShowCheckedModeBanner: false,
       title: 'TOF Pulls',
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-      ),
+      theme: (isDarkTheme ?? false) ? createAppTheme(dark: true) : createAppTheme(dark: false),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
