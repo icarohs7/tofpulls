@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getit_core_resources/getit_core_resources.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 
 import 'app/app_controller.dart';
+import 'app/shared/repositories/banner_repository.dart';
 import 'routes.dart';
+import 'themes.dart';
 
-final getIt = GetIt.I;
+late final getIt = GetIt.I;
+late final rxPrefs = RxSharedPreferences.getInstance();
 
 // ignore: avoid_void_async
 void main() async {
@@ -22,6 +27,7 @@ Future<void> setup() async {
   //Controllers
   getIt.registerLazySingleton(() => AppController());
   //Repositories
+  getIt.registerLazySingleton(() => BannerRepository());
   //Services
   //Others
 }

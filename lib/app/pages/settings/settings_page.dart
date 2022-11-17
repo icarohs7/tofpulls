@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../main.dart';
 import '../../app_controller.dart';
@@ -9,13 +9,13 @@ class SettingsPage extends ConsumerWidget {
 
   AppController get appController => getIt();
 
-  void toggleDarkTheme(WidgetRef ref, bool state) {
-    ref.read(appController.isDarkThemeProvider.notifier).state = state;
+  void toggleDarkTheme(bool state) {
+    appController.setDarkTheme(state);
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkTheme = ref.watch(appController.isDarkThemeProvider);
+    final isDarkTheme = ref.watch(appController.isDarkThemeProvider).value;
 
     return Scaffold(
       appBar: AppBar(
@@ -26,8 +26,8 @@ class SettingsPage extends ConsumerWidget {
         children: [
           SwitchListTile(
             title: Text('Tema Escuro'),
-            value: isDarkTheme,
-            onChanged: (state) => toggleDarkTheme(ref, state),
+            value: isDarkTheme ?? false,
+            onChanged: (state) => toggleDarkTheme(state),
           ),
         ],
       ),
