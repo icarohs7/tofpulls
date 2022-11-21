@@ -4,26 +4,31 @@ import 'package:getit_core_resources/getit_core_resources.dart';
 
 import '../../../../main.dart';
 import '../../../app_controller.dart';
+import '../../../shared/models/limited_banner.dart';
 
 class CreateBannerDialog extends HookWidget {
+  CreateBannerDialog({this.banner});
+
+  final LimitedBanner? banner;
   final bannerKey = GlobalKey<FormFieldState>();
 
   AppController get appController => getIt();
 
   Future<void> addBanner(BuildContext context, String text, DateTime creationDate) async {
     if (bannerKey.currentState?.validate() == false) return;
-    final banner = await appController.createBanner(text, creationDate);
+    final banner = await appController.createBanner(text, creationDate, this.banner);
     Navigator.pop(context, banner);
   }
 
   @override
   Widget build(BuildContext context) {
-    final bannerNameController = useTextEditingController();
-    final dateTimeState = useState(DateTime.now());
-    final dateTimeController = useTextEditingController(text: DateTime.now().string('dd/MM/yyyy'));
+    final bannerNameController = useTextEditingController(text: banner?.name);
+    final dateTimeState = useState(banner?.creationDate ?? DateTime.now());
+    final dateTimeController = useTextEditingController(
+        text: (banner?.creationDate ?? DateTime.now()).string('dd/MM/yyyy'));
 
     return AlertDialog(
-      title: Text('Adicionar Banner'),
+      title: Text(banner == null ? 'Adicionar Banner' : 'Editar Banner'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,

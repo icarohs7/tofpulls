@@ -44,6 +44,13 @@ class HomePage extends StatelessWidget {
 class _HomeBody extends ConsumerWidget {
   late final appController = getIt<AppController>();
 
+  Future<void> editItem(BuildContext context, LimitedBanner banner) async {
+    await showDialog(
+      context: context,
+      builder: (context) => CreateBannerDialog(banner: banner),
+    );
+  }
+
   Future<void> deleteItem(BuildContext context, LimitedBanner banner) async {
     await appController.deleteBanner(banner);
   }
@@ -97,6 +104,7 @@ class _HomeBody extends ConsumerWidget {
               ],
             ),
             onTap: () => context.beamToNamed('/banner', data: banner),
+            onLongPress: () => editItem(context, banner),
           ),
         );
       },
