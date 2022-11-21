@@ -93,7 +93,7 @@ class _HomeBody extends ConsumerWidget {
                 Expanded(
                   child: Text('Tiros: ${banner.pulls}'),
                 ),
-                Text(banner.creationDate.string('dd/MM/yyyy HH:mm')),
+                Text(banner.creationDate.string('dd/MM/yyyy')),
               ],
             ),
             onTap: () => context.beamToNamed('/banner', data: banner),

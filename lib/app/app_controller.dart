@@ -18,8 +18,8 @@ class AppController {
     await rxPrefs.setBool('isDark', isDark);
   }
 
-  Future<LimitedBanner> createBanner(String name) async {
-    final banner = LimitedBanner(name: name, creationDate: DateTime.now());
+  Future<LimitedBanner> createBanner(String name, DateTime creationDate) async {
+    final banner = LimitedBanner(name: name, creationDate: creationDate);
     final id = await bannerRepository.insert(banner);
     return banner.copyWith(id: id);
   }

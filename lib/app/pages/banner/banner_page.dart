@@ -22,12 +22,6 @@ class BannerPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(banner.name),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.ssid_chart),
-          ),
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
